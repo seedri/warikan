@@ -40,11 +40,15 @@ class _NewGroupPageState extends State<NewGroupPage> {
               foregroundColor: Colors.white,
               title: const Text(
                 '新規グループ作成',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               backgroundColor: const Color(0xFF198D34),
+              iconTheme: const IconThemeData(color: Colors.white),
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () {
                   Navigator.pop(context);
                   ref

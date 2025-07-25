@@ -45,105 +45,123 @@ class _KeishaCalculatePageState extends ConsumerState<KeishaCalculatePage> {
         ref.watch(keishaCalculatePageControllerProvider).keishaGroups;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        controller: scrollController,
-        child: KeyboardActions(
-          autoScroll: false,
-          config: buildKeyboardConfig(
-              focusNodeAmount: focusNodeAmount,
-              focusNodePeople: focusNodePeople),
+      body: KeyboardActions(
+        autoScroll: false,
+        config: buildKeyboardConfig(
+            focusNodeAmount: focusNodeAmount,
+            focusNodePeople: focusNodePeople),
+        child: SingleChildScrollView(
           child: Column(
-            children: [
-              Row(
-                children: [
-                  _inputTotalAmount(context, ref),
-                  Expanded(child: _inputTotalPeople(context, ref)),
-                ],
-              ),
-              Column(
-                children: [
-                  if (keishaGroups.isNotEmpty) ...[
-                    const Text('傾斜グループ一覧'),
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxHeight: 80,
-                      ),
-                      child: Scrollbar(
-                        thumbVisibility: true,
-                        child: ListView.builder(
-                          controller: scrollController,
-                          shrinkWrap: true,
-                          itemCount: keishaGroups.length,
-                          itemBuilder: (context, index) {
-                            final group = keishaGroups[index];
-                            return Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    child: Text(
-                                      '${group.groupName}・',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                  Text(
-                                    '${group.totalPeople}名→',
+          children: [
+            Row(
+              children: [
+                _inputTotalAmount(context, ref),
+                Expanded(child: _inputTotalPeople(context, ref)),
+              ],
+            ),
+            const Text(
+              'グループ',
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Column(
+              children: [
+                if (keishaGroups.isEmpty) ...[
+                  const Center(
+                    child: Text('グループがありません'),
+                  ),
+                ] else ...[
+                  const Text('傾斜グループ一覧'),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxHeight: 80,
+                    ),
+                    child: Scrollbar(
+                      thumbVisibility: true,
+                      child: ListView.builder(
+                        controller: scrollController,
+                        shrinkWrap: true,
+                        itemCount: keishaGroups.length,
+                        itemBuilder: (context, index) {
+                          final group = keishaGroups[index];
+                          return Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Flexible(
+                                  flex: 1,
+                                  child: Text(
+                                    '${group.groupName}・',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  Text(
-                                    '${group.totalAmount}円',
-                                    style: const TextStyle(
+                                ),
+                                Text(
+                                  '${group.totalPeople}名→',
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  '${group.totalAmount}円',
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                if (group.calcSlope ==
+                                    CalcSlope.discount) ...[
+                                  const Text(
+                                    '引き',
+                                    style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  if (group.calcSlope ==
-                                      CalcSlope.discount) ...[
-                                    const Text(
-                                      '引き',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ] else if (group.calcSlope ==
-                                      CalcSlope.premium) ...[
-                                    const Text(
-                                      '増し',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
-                                  const SizedBox(
-                                    width: 20,
-                                  )
-                                ]);
-                          },
-                        ),
+                                ] else if (group.calcSlope ==
+                                    CalcSlope.premium) ...[
+                                  const Text(
+                                    '増し',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                                const SizedBox(
+                                  width: 20,
+                                )
+                              ]);
+                        },
                       ),
                     ),
-                  ]
-                ],
-              ),
-              const ResultContainerKeisha(),
-              const SizedBox(height: 10),
-              eventSaveButton(context, ref),
+                  ),
+                ]
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const ResultContainerKeisha(),
+            const SizedBox(
+              height: 20,
+            ),
+            eventSaveButton(context, ref),
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const NewGroupPage()));
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const NewGroupPage(),
+            ),
+          );
         },
         label: const Text(
           'グループを追加',
@@ -222,17 +240,29 @@ class _KeishaCalculatePageState extends ConsumerState<KeishaCalculatePage> {
   }
 
   Widget eventSaveButton(BuildContext context, WidgetRef ref) {
+    final isEnabled = totalAmountController.text.isNotEmpty &&
+        totalPeopleController.text.isNotEmpty;
+        
     return SizedBox(
-      width: 200,
-      height: 55,
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            side: const BorderSide(color: Colors.white, width: 2.5),
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.green,
+      width: 250,
+      height: 56,
+      child: ElevatedButton.icon(
+          icon: const Icon(Icons.save),
+          label: const Text(
+            'イベントとして保存',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          onPressed: totalAmountController.text.isEmpty ||
-                  totalPeopleController.text.isEmpty
+          style: ElevatedButton.styleFrom(
+            backgroundColor: isEnabled 
+                ? Theme.of(context).colorScheme.primary
+                : Colors.grey,
+            foregroundColor: Colors.white,
+            elevation: isEnabled ? 2 : 0,
+          ),
+          onPressed: !isEnabled
               ? null
               : () async {
                   // イベント数が10件を超える場合は保存できない
@@ -291,8 +321,7 @@ class _KeishaCalculatePageState extends ConsumerState<KeishaCalculatePage> {
                         });
                   }
                 },
-          child: const Text('イベントを保存',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+      ),
     );
   }
 }

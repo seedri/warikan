@@ -141,6 +141,7 @@ class _EventDetailPageKeishaState extends State<EventDetailPageKeisha> {
             '傾斜割り勘詳細',
             style: TextStyle(
               fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
           actions: [
@@ -152,6 +153,7 @@ class _EventDetailPageKeishaState extends State<EventDetailPageKeisha> {
           ],
           backgroundColor: Colors.lightBlue,
           foregroundColor: Colors.white,
+          iconTheme: const IconThemeData(color: Colors.white),
         ),
         body: SingleChildScrollView(
           child: Padding(

@@ -5,6 +5,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:warikan/models/event_keisha.dart';
 import 'package:warikan/models/event_normal.dart';
 import 'package:warikan/pages/main_page.dart';
+import 'package:warikan/providers/theme_provider.dart';
+import 'package:warikan/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,20 +22,20 @@ void main() async {
   )));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key, required this.isar});
 
   final Isar isar;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(themeControllerProvider);
+
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Warikan',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0x00196b52)),
-        useMaterial3: true,
-        fontFamily: 'Noto Sans JP',
-      ),
+      theme: AppThemes.lightTheme,
+      darkTheme: AppThemes.darkTheme,
+      themeMode: ref.read(themeControllerProvider.notifier).themeMode,
       home: MainPage(isar: isar),
     );
   }

@@ -28,9 +28,16 @@ class $AssetsImagesGen {
   AssetGenImage get groupAddButton =>
       const AssetGenImage('assets/images/group_add_button.png');
 
+  /// File path: assets/images/icon_ios.png
+  AssetGenImage get iconIos =>
+      const AssetGenImage('assets/images/icon_ios.png');
+
+  /// File path: assets/images/splash.png
+  AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
+
   /// List of all assets
   List<AssetGenImage> get values =>
-      [bgWarikan, bgWarikan2, bgWarikan3, groupAddButton];
+      [bgWarikan, bgWarikan2, bgWarikan3, groupAddButton, iconIos, splash];
 }
 
 class Assets {

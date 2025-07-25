@@ -75,8 +75,8 @@ class _MyHomePageState extends State<MainPage> {
               label: '割り勘'),
           NavigationDestination(
               icon: Icon(size: 30, Icons.event), label: 'イベント'),
-          //NavigationDestination(
-          //   icon: Icon(size: 30, Icons.settings), label: '設定'),
+          NavigationDestination(
+             icon: Icon(size: 30, Icons.settings), label: '設定'),
         ],
       ),
     );

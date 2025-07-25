@@ -44,7 +44,7 @@ class _CalculatePageState extends State<CalculatePage>
     final AdWidget bannerAdWidget = AdWidget(ad: bannerAd);
     return UnFocus(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: TabBar(
             controller: _tabController,

@@ -41,8 +41,9 @@ class _NormalCalculatePageState extends ConsumerState<NormalCalculatePage> {
         focusNodeAmount: focusNodeAmount, focusNodePeople: focusNodePeople);
     return KeyboardActions(
       config: config,
-      child: Column(
-        children: [
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
           Row(
             children: [
               _inputTotalAmount(context, ref),
@@ -94,7 +95,8 @@ class _NormalCalculatePageState extends ConsumerState<NormalCalculatePage> {
             height: 10,
           ),
           eventSaveButton(context, ref),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -138,12 +140,12 @@ class _NormalCalculatePageState extends ConsumerState<NormalCalculatePage> {
   Widget _inputTotalPeople(BuildContext context, WidgetRef ref) {
     return Container(
       margin: const EdgeInsets.only(right: 15),
-      width: MediaQuery.of(context).size.width * 0.55,
       child: TextFormField(
         focusNode: focusNodePeople,
         keyboardType: TextInputType.number,
         controller: totalPeopleController,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        textInputAction: TextInputAction.done,
         onChanged: (value) {
           if (value.isEmpty) {
             return;
@@ -168,90 +170,91 @@ class _NormalCalculatePageState extends ConsumerState<NormalCalculatePage> {
   }
 
   Widget _fractionChoiceChips(WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ChoiceChip(
-            label: const Text("1円"),
-            backgroundColor: Colors.grey[350],
-            selectedColor: const Color.fromARGB(255, 104, 245, 172),
-            selected: ref
-                    .watch(normalCalculatePageControllerProvider)
-                    .fractionPrice ==
-                1,
-            onSelected: (_) {
-              ref
-                  .read(normalCalculatePageControllerProvider.notifier)
-                  .setFractionPrice(1);
-              ref.read(normalCalculatePageControllerProvider.notifier).divide();
-            },
-          ),
-          ChoiceChip(
-            label: const Text("10円"),
-            backgroundColor: Colors.grey[350],
-            selectedColor: const Color.fromARGB(255, 104, 245, 172),
-            selected: ref
-                    .watch(normalCalculatePageControllerProvider)
-                    .fractionPrice ==
-                10,
-            onSelected: (_) {
-              ref
-                  .read(normalCalculatePageControllerProvider.notifier)
-                  .setFractionPrice(10);
-              ref.read(normalCalculatePageControllerProvider.notifier).divide();
-            },
-          ),
-          ChoiceChip(
-            label: const Text("100円"),
-            backgroundColor: Colors.grey[350],
-            selectedColor: const Color.fromARGB(255, 104, 245, 172),
-            selected: ref
-                    .watch(normalCalculatePageControllerProvider)
-                    .fractionPrice ==
-                100,
-            onSelected: (_) {
-              ref
-                  .read(normalCalculatePageControllerProvider.notifier)
-                  .setFractionPrice(100);
-              ref.read(normalCalculatePageControllerProvider.notifier).divide();
-            },
-          ),
-          ChoiceChip(
-            label: const Text("1000円"),
-            backgroundColor: Colors.grey[350],
-            selectedColor: const Color.fromARGB(255, 104, 245, 172),
-            selected: ref
-                    .watch(normalCalculatePageControllerProvider)
-                    .fractionPrice ==
-                1000,
-            onSelected: (_) {
-              ref
-                  .read(normalCalculatePageControllerProvider.notifier)
-                  .setFractionPrice(1000);
-              ref.read(normalCalculatePageControllerProvider.notifier).divide();
-            },
-          ),
-        ],
-      ),
+    return Wrap(
+      spacing: 8,
+      children: [
+        ChoiceChip(
+          label: const Text("1円"),
+          selected: ref
+                  .watch(normalCalculatePageControllerProvider)
+                  .fractionPrice ==
+              1,
+          onSelected: (_) {
+            ref
+                .read(normalCalculatePageControllerProvider.notifier)
+                .setFractionPrice(1);
+            ref.read(normalCalculatePageControllerProvider.notifier).divide();
+          },
+        ),
+        ChoiceChip(
+          label: const Text("10円"),
+          selected: ref
+                  .watch(normalCalculatePageControllerProvider)
+                  .fractionPrice ==
+              10,
+          onSelected: (_) {
+            ref
+                .read(normalCalculatePageControllerProvider.notifier)
+                .setFractionPrice(10);
+            ref.read(normalCalculatePageControllerProvider.notifier).divide();
+          },
+        ),
+        ChoiceChip(
+          label: const Text("100円"),
+          selected: ref
+                  .watch(normalCalculatePageControllerProvider)
+                  .fractionPrice ==
+              100,
+          onSelected: (_) {
+            ref
+                .read(normalCalculatePageControllerProvider.notifier)
+                .setFractionPrice(100);
+            ref.read(normalCalculatePageControllerProvider.notifier).divide();
+          },
+        ),
+        ChoiceChip(
+          label: const Text("1000円"),
+          selected: ref
+                  .watch(normalCalculatePageControllerProvider)
+                  .fractionPrice ==
+              1000,
+          onSelected: (_) {
+            ref
+                .read(normalCalculatePageControllerProvider.notifier)
+                .setFractionPrice(1000);
+            ref.read(normalCalculatePageControllerProvider.notifier).divide();
+          },
+        ),
+      ],
     );
   }
 
   Widget eventSaveButton(BuildContext context, WidgetRef ref) {
+    final isEnabled = totalAmountController.text.isNotEmpty &&
+        totalPeopleController.text.isNotEmpty;
+        
     return SizedBox(
-      width: 200,
-      height: 55,
-      child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            side: const BorderSide(color: Colors.white, width: 2.5),
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.green,
+      width: 250,
+      height: 56,
+      child: ElevatedButton.icon(
+        icon: const Icon(Icons.save),
+        label: const Text(
+          'イベントとして保存',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
           ),
-          onPressed: totalAmountController.text.isEmpty ||
-                  totalPeopleController.text.isEmpty
-              ? null
-              : () async {
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isEnabled 
+              ? Theme.of(context).colorScheme.primary
+              : Colors.grey,
+          foregroundColor: Colors.white,
+          elevation: isEnabled ? 2 : 0,
+        ),
+        onPressed: !isEnabled
+            ? null
+            : () async {
                   // イベント数が10件を超える場合は保存できない
                   final eventCount = await ref
                       .read(normalCalculatePageControllerProvider.notifier)
@@ -301,8 +304,7 @@ class _NormalCalculatePageState extends ConsumerState<NormalCalculatePage> {
                         });
                   }
                 },
-          child: const Text('イベントを保存',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+      ),
     );
   }
 }

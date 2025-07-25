@@ -38,8 +38,9 @@ class _EventSavePopUpKeishaState extends State<EventSavePopUpKeisha> {
       actions: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white, // ボタンの背景色
-            side: const BorderSide(color: Colors.black, width: 0.5),
+            backgroundColor: Colors.grey.shade300, // ボタンの背景色
+            foregroundColor: Colors.black, // テキストの色
+            side: const BorderSide(color: Colors.grey, width: 0.5),
           ),
           onPressed: () {
             Navigator.of(context).pop();

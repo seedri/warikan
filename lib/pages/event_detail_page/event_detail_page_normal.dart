@@ -153,7 +153,10 @@ class _EventDetailPageNormalState extends State<EventDetailPageNormal> {
         appBar: AppBar(
           title: const Text(
             'ノーマル割り勘詳細',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
           actions: [
             IconButton(
@@ -164,6 +167,7 @@ class _EventDetailPageNormalState extends State<EventDetailPageNormal> {
           ],
           backgroundColor: Colors.lightGreen,
           foregroundColor: Colors.white,
+          iconTheme: const IconThemeData(color: Colors.white),
         ),
         body: SingleChildScrollView(
           child: Padding(
