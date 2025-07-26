@@ -5,7 +5,7 @@ class AppThemes {
   static const Color primaryColor = Color(0xFF196B52);
   static const Color primaryVariant = Color(0xFF0E4A36);
   static const Color accentColor = Color(0xFF1EE77B);
-  
+
   // ライトテーマ
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
@@ -18,7 +18,7 @@ class AppThemes {
       primary: primaryColor,
       secondary: accentColor,
     ),
-    
+
     // AppBar テーマ
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
@@ -33,7 +33,7 @@ class AppThemes {
       ),
       iconTheme: IconThemeData(color: primaryColor),
     ),
-    
+
     // NavigationBar テーマ
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: Colors.white,
@@ -46,7 +46,7 @@ class AppThemes {
         ),
       ),
     ),
-    
+
     // InputDecoration テーマ
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -65,7 +65,7 @@ class AppThemes {
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
     ),
-    
+
     // ElevatedButton テーマ
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -84,9 +84,9 @@ class AppThemes {
         ),
       ),
     ),
-    
+
     // Card テーマ
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 2,
       shadowColor: Colors.black.withOpacity(0.1),
       shape: RoundedRectangleBorder(
@@ -94,9 +94,9 @@ class AppThemes {
       ),
       color: Colors.white,
     ),
-    
+
     // TabBar テーマ
-    tabBarTheme: const TabBarTheme(
+    tabBarTheme: const TabBarThemeData(
       labelColor: primaryColor,
       unselectedLabelColor: Colors.grey,
       indicator: UnderlineTabIndicator(
@@ -114,7 +114,7 @@ class AppThemes {
       ),
     ),
   );
-  
+
   // ダークテーマ
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
@@ -129,7 +129,7 @@ class AppThemes {
       surface: const Color(0xFF1A1A1A),
       onSurface: Colors.white,
     ),
-    
+
     // AppBar テーマ
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
@@ -144,7 +144,7 @@ class AppThemes {
       ),
       iconTheme: IconThemeData(color: Colors.white),
     ),
-    
+
     // NavigationBar テーマ
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: const Color(0xFF2A2A2A),
@@ -158,7 +158,7 @@ class AppThemes {
         ),
       ),
     ),
-    
+
     // InputDecoration テーマ
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -179,7 +179,7 @@ class AppThemes {
       labelStyle: const TextStyle(color: Colors.white70),
       hintStyle: const TextStyle(color: Colors.white54),
     ),
-    
+
     // ElevatedButton テーマ
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -198,9 +198,9 @@ class AppThemes {
         ),
       ),
     ),
-    
+
     // Card テーマ
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 2,
       shadowColor: Colors.black.withOpacity(0.3),
       shape: RoundedRectangleBorder(
@@ -208,9 +208,9 @@ class AppThemes {
       ),
       color: const Color(0xFF2A2A2A),
     ),
-    
+
     // TabBar テーマ
-    tabBarTheme: const TabBarTheme(
+    tabBarTheme: const TabBarThemeData(
       labelColor: accentColor,
       unselectedLabelColor: Colors.white54,
       indicator: UnderlineTabIndicator(
@@ -227,7 +227,7 @@ class AppThemes {
         fontFamily: 'Noto Sans JP',
       ),
     ),
-    
+
     // Scaffold テーマ
     scaffoldBackgroundColor: const Color(0xFF121212),
   );

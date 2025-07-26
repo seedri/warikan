@@ -42,18 +42,60 @@ class _NormalCalculatePageState extends ConsumerState<NormalCalculatePage> {
     return KeyboardActions(
       config: config,
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-          Row(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Column(
             children: [
-              _inputTotalAmount(context, ref),
-              Expanded(child: _inputTotalPeople(context, ref)),
-            ],
-          ),
-          const Text(
-            '端数処理',
-          ),
-          SegmentedButton<FractionRound>(
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    _inputTotalAmount(context, ref),
+                    const SizedBox(width: 12),
+                    Expanded(child: _inputTotalPeople(context, ref)),
+                  ],
+                ),
+              ),
+            ),
+          const SizedBox(height: 24),
+          Card(
+            elevation: 1,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.calculate_outlined,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          '端数処理',
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  SegmentedButton<FractionRound>(
               onSelectionChanged: (value) {
                 selected = value;
                 ref
@@ -68,43 +110,57 @@ class _NormalCalculatePageState extends ConsumerState<NormalCalculatePage> {
               style: SegmentedButton.styleFrom(
                   backgroundColor: Colors.grey[350],
                   selectedBackgroundColor:
-                      const Color.fromARGB(255, 104, 245, 172)),
+                      const Color.fromARGB(255, 104, 245, 172),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+              ),
               segments: const [
                 ButtonSegment(
                     value: FractionRound.none,
                     label: Text(
                       '処理なし',
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     )),
                 ButtonSegment(
                     value: FractionRound.roundUp,
                     label: Text(
                       '切り上げ',
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     )),
                 ButtonSegment(
                     value: FractionRound.roundDown,
                     label: Text(
                       '切り下げ',
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     ))
               ],
               selected: selected),
-          if (ref.watch(normalCalculatePageControllerProvider).fraction !=
-              FractionRound.none)
-            _fractionChoiceChips(ref),
-          const ResultContainer(),
-          const SizedBox(
-            height: 10,
+                  if (ref.watch(normalCalculatePageControllerProvider).fraction !=
+                      FractionRound.none) ...[
+                    const SizedBox(height: 12),
+                    _fractionChoiceChips(ref),
+                  ],
+                ],
+              ),
+            ),
           ),
-          eventSaveButton(context, ref),
+          const SizedBox(height: 24),
+          const ResultContainer(),
+          const SizedBox(height: 24),
+          Center(child: eventSaveButton(context, ref)),
+          const SizedBox(height: 16),
           ],
+        ),
         ),
       ),
     );
   }
 
   Widget _inputTotalAmount(BuildContext context, WidgetRef ref) {
-    return Container(
-      margin: const EdgeInsets.all(20),
-      width: MediaQuery.of(context).size.width * 0.55,
+    return Expanded(
+      flex: 2,
       child: TextFormField(
         focusNode: focusNodeAmount,
         keyboardType: TextInputType.number,
@@ -123,24 +179,31 @@ class _NormalCalculatePageState extends ConsumerState<NormalCalculatePage> {
             ref.read(normalCalculatePageControllerProvider.notifier).divide();
           }
         },
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4.0)),
+              borderRadius: BorderRadius.circular(8.0),
             ),
-            prefixIcon: Icon(Icons.monetization_on_outlined),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(color: Colors.grey.shade300),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
+            ),
+            prefixIcon: Icon(Icons.monetization_on_outlined, 
+              color: Theme.of(context).colorScheme.primary),
             labelText: '合計金額',
-            suffix: Text(
+            suffix: const Text(
               '円',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.grey),
             )),
       ),
     );
   }
 
   Widget _inputTotalPeople(BuildContext context, WidgetRef ref) {
-    return Container(
-      margin: const EdgeInsets.only(right: 15),
-      child: TextFormField(
+    return TextFormField(
         focusNode: focusNodePeople,
         keyboardType: TextInputType.number,
         controller: totalPeopleController,
@@ -155,17 +218,25 @@ class _NormalCalculatePageState extends ConsumerState<NormalCalculatePage> {
               .setInputPeople(int.parse(value));
           ref.read(normalCalculatePageControllerProvider.notifier).divide();
         },
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4.0)),
+              borderRadius: BorderRadius.circular(8.0),
             ),
-            prefixIcon: Icon(Icons.group),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(color: Colors.grey.shade300),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
+            ),
+            prefixIcon: Icon(Icons.group, 
+              color: Theme.of(context).colorScheme.primary),
             labelText: '人数',
-            suffix: Text(
+            suffix: const Text(
               '人',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.grey),
             )),
-      ),
     );
   }
 
@@ -250,7 +321,12 @@ class _NormalCalculatePageState extends ConsumerState<NormalCalculatePage> {
               ? Theme.of(context).colorScheme.primary
               : Colors.grey,
           foregroundColor: Colors.white,
-          elevation: isEnabled ? 2 : 0,
+          elevation: isEnabled ? 3 : 0,
+          shadowColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         ),
         onPressed: !isEnabled
             ? null
