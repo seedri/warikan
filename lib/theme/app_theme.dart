@@ -37,7 +37,7 @@ class AppThemes {
     // NavigationBar テーマ
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: Colors.white,
-      indicatorColor: accentColor.withOpacity(0.2),
+      indicatorColor: accentColor.withValues(alpha: 0.2),
       labelTextStyle: WidgetStateProperty.all(
         const TextStyle(
           fontFamily: 'Noto Sans JP',
@@ -72,7 +72,7 @@ class AppThemes {
         backgroundColor: primaryColor,
         foregroundColor: Colors.white,
         elevation: 2,
-        shadowColor: primaryColor.withOpacity(0.3),
+        shadowColor: primaryColor.withValues(alpha: 0.3),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -88,7 +88,7 @@ class AppThemes {
     // Card テーマ
     cardTheme: CardThemeData(
       elevation: 2,
-      shadowColor: Colors.black.withOpacity(0.1),
+      shadowColor: Colors.black.withValues(alpha: 0.1),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -148,7 +148,7 @@ class AppThemes {
     // NavigationBar テーマ
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: const Color(0xFF2A2A2A),
-      indicatorColor: accentColor.withOpacity(0.3),
+      indicatorColor: accentColor.withValues(alpha: 0.3),
       labelTextStyle: WidgetStateProperty.all(
         const TextStyle(
           fontFamily: 'Noto Sans JP',
@@ -186,7 +186,7 @@ class AppThemes {
         backgroundColor: accentColor,
         foregroundColor: Colors.black,
         elevation: 2,
-        shadowColor: accentColor.withOpacity(0.3),
+        shadowColor: accentColor.withValues(alpha: 0.3),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -202,7 +202,7 @@ class AppThemes {
     // Card テーマ
     cardTheme: CardThemeData(
       elevation: 2,
-      shadowColor: Colors.black.withOpacity(0.3),
+      shadowColor: Colors.black.withValues(alpha: 0.3),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),

@@ -1,0 +1,7 @@
+targets:
+  $default:
+    builders:
+      isar_generator|isarGenerator:
+        enabled: true
+        generate_for:
+          - lib/models/**.dart

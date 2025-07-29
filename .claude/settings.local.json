@@ -2,7 +2,16 @@
   "permissions": {
     "allow": [
       "Bash(flutter analyze:*)",
-      "Bash(flutter build:*)"
+      "Bash(flutter build:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(flutter pub:*)",
+      "Bash(pod install:*)",
+      "Bash(rm:*)",
+      "Bash(flutter doctor:*)",
+      "Bash(flutter:*)",
+      "Bash(pod repo update:*)",
+      "Bash(ls:*)",
+      "Bash(pod update:*)"
     ],
     "deny": []
   }

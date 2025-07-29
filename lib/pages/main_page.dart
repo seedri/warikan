@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:rate_my_app/rate_my_app.dart';
+import 'package:warikan/ads/premium_ad_banner.dart';
 import 'package:warikan/pages/calculate_page.dart';
 import 'package:warikan/pages/event_page/event_page.dart';
 import 'package:warikan/pages/setting_page.dart';
@@ -57,7 +58,12 @@ class _MyHomePageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: pages[_selectedIndex],
+      body: Column(
+        children: [
+          Expanded(child: pages[_selectedIndex]),
+          const PremiumAdBanner(),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         height: 55,
         selectedIndex: _selectedIndex,

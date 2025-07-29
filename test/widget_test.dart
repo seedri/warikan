@@ -5,12 +5,12 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:warikan/models/event_keisha.dart';
 import 'package:warikan/models/event_normal.dart';
+import 'package:warikan/models/premium_user.dart';
 
 import 'package:warikan/main.dart';
 
@@ -21,7 +21,7 @@ void main() {
       ProviderScope(
         child: MyApp(
           isar: await Isar.open(
-            [EventNormalSchema, EventKeishaSchema],
+            [EventNormalSchema, EventKeishaSchema, PremiumUserSchema],
             directory: '', // テスト用の空のディレクトリ
           ),
         ),
