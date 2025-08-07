@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:isar/isar.dart';
-import 'package:warikan/ads/ad_banner.dart';
 import 'package:warikan/models/event_keisha.dart';
 import 'package:warikan/models/event_normal.dart';
 import 'package:warikan/pages/event_page/widgets/list_tile_keisha.dart';
@@ -18,13 +16,11 @@ class EventPage extends StatefulWidget {
 
 class _EventPageState extends State<EventPage> {
   late Future<List<dynamic>> _eventsFuture;
-  late BannerAd bannerAd;
+  
   @override
   void initState() {
     super.initState();
     _loadEvents();
-    bannerAd = AdBanner.createBannerAd();
-    bannerAd.load();
   }
 
   void _loadEvents() {
@@ -43,7 +39,6 @@ class _EventPageState extends State<EventPage> {
 
   @override
   Widget build(BuildContext context) {
-    final AdWidget bannerAdWidget = AdWidget(ad: bannerAd);
     return Scaffold(
       body: FutureBuilder<List<dynamic>>(
         future: _eventsFuture,
@@ -100,10 +95,6 @@ class _EventPageState extends State<EventPage> {
           }
         },
       ),
-      bottomNavigationBar: SizedBox(
-          height: bannerAd.size.height.toDouble(),
-          width: bannerAd.size.width.toDouble(),
-          child: bannerAdWidget),
     );
   }
 }

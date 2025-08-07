@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:warikan/gen/assets.gen.dart';
 import 'package:warikan/pages/normal_calculate_page/normal_calculate_page_controller.dart';
-import 'package:warikan/services/premium_service.dart';
-import 'package:warikan/services/share_service.dart';
 
 class ResultContainer extends ConsumerWidget {
   const ResultContainer({super.key});
@@ -15,7 +13,6 @@ class ResultContainer extends ConsumerWidget {
     final calcResult = state.divideResult;
     final fraction = state.fraction;
     final difference = state.difference;
-    final isPremiumAsync = ref.watch(isPremiumProvider);
 
     return Column(
       children: [
@@ -58,50 +55,7 @@ class ResultContainer extends ConsumerWidget {
             ),
           ),
         ),
-        if (calcResult > 0) // 計算結果がある場合のみ共有ボタンを表示
-          const SizedBox(height: 8),
-        if (calcResult > 0)
-          isPremiumAsync.when(
-            data: (isPremium) => ElevatedButton.icon(
-              onPressed: () => _showShareDialog(context, ref, state, isPremium),
-              icon: Icon(isPremium ? Icons.share : Icons.star),
-              label: Text(isPremium ? '結果を共有' : 'Pro機能'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: isPremium 
-                  ? Theme.of(context).colorScheme.primary
-                  : Colors.amber.shade600,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              ),
-            ),
-            loading: () => const SizedBox.shrink(),
-            error: (_, __) => const SizedBox.shrink(),
-          ),
       ],
-    );
-  }
-
-  void _showShareDialog(BuildContext context, WidgetRef ref, NormalCalculatePageState state, bool isPremium) {
-    final shareText = ShareService.formatWarikanResult(
-      totalAmount: state.inputTotal,
-      totalPeople: state.inputPeople,
-      perPersonAmount: state.divideResult.round(),
-      remainingAmount: state.difference.round(),
-    );
-
-    ShareService.showShareDialog(
-      context: context,
-      shareText: shareText,
-      isPremium: isPremium,
-      onPremiumRequired: () {
-        // プレミアム画面への遷移をここに実装
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('プレミアム機能です。設定画面からアップグレードしてください。'),
-            backgroundColor: Colors.orange,
-          ),
-        );
-      },
     );
   }
 }

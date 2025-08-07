@@ -62,7 +62,7 @@ class _NormalCalculatePageState extends ConsumerState<NormalCalculatePage> {
                 ),
               ),
             ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
           Card(
             elevation: 1,
             shape: RoundedRectangleBorder(
@@ -146,7 +146,7 @@ class _NormalCalculatePageState extends ConsumerState<NormalCalculatePage> {
               ),
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
           const ResultContainer(),
           const SizedBox(height: 24),
           Center(child: eventSaveButton(context, ref)),

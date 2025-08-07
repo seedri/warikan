@@ -3,7 +3,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:warikan/ads/ad_banner.dart';
 import 'package:warikan/ads/ad_manager.dart';
 import 'package:warikan/models/calc_slope.dart';
 import 'package:warikan/models/event_keisha.dart';
@@ -27,14 +26,11 @@ class _EventDetailPageKeishaState extends State<EventDetailPageKeisha> {
   late List<TextEditingController> _nameControllers;
   late List<bool> _payList;
   bool _isChanged = false;
-  late BannerAd bannerAd;
   late InterstitialAd interstitialAd;
 
   @override
   void initState() {
     super.initState();
-    bannerAd = AdBanner.createBannerAd();
-    bannerAd.load();
     interstitialAdJudge();
     _nameControllers = List.generate(
       widget.event.allPeople,
@@ -131,7 +127,6 @@ class _EventDetailPageKeishaState extends State<EventDetailPageKeisha> {
   Widget build(BuildContext context) {
     final String formattedDate =
         DateFormat('yyyy/MM/dd').format(widget.event.date);
-    final AdWidget bannerAdWidget = AdWidget(ad: bannerAd);
     return SafeArea(
       top: false,
       child: Scaffold(
@@ -168,10 +163,6 @@ class _EventDetailPageKeishaState extends State<EventDetailPageKeisha> {
             ),
           ),
         ),
-        bottomNavigationBar: SizedBox(
-            height: bannerAd.size.height.toDouble(),
-            width: bannerAd.size.width.toDouble(),
-            child: bannerAdWidget),
       ),
     );
   }

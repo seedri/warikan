@@ -49,17 +49,30 @@ class _KeishaCalculatePageState extends ConsumerState<KeishaCalculatePage> {
         autoScroll: false,
         config: buildKeyboardConfig(
             focusNodeAmount: focusNodeAmount, focusNodePeople: focusNodePeople),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  _inputTotalAmount(context, ref),
-                  Expanded(child: _inputTotalPeople(context, ref)),
-                ],
-              ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        _inputTotalAmount(context, ref),
+                        const SizedBox(width: 12),
+                        Expanded(child: _inputTotalPeople(context, ref)),
+                      ],
+                    ),
+                  ),
+                ),
+              const SizedBox(height: 16),
               const Text(
-                'グループ',
+                '傾斜グループ一覧',
               ),
               const SizedBox(
                 height: 10,
@@ -149,7 +162,8 @@ class _KeishaCalculatePageState extends ConsumerState<KeishaCalculatePage> {
                 height: 20,
               ),
               eventSaveButton(context, ref),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -177,9 +191,8 @@ class _KeishaCalculatePageState extends ConsumerState<KeishaCalculatePage> {
   }
 
   Widget _inputTotalAmount(BuildContext context, WidgetRef ref) {
-    return Container(
-      margin: const EdgeInsets.all(20),
-      width: MediaQuery.of(context).size.width * 0.55,
+    return Expanded(
+      flex: 2,
       child: TextFormField(
         focusNode: focusNodeAmount,
         keyboardType: TextInputType.number,
@@ -223,9 +236,7 @@ class _KeishaCalculatePageState extends ConsumerState<KeishaCalculatePage> {
   }
 
   Widget _inputTotalPeople(BuildContext context, WidgetRef ref) {
-    return Container(
-      margin: const EdgeInsets.only(right: 15),
-      child: TextFormField(
+    return TextFormField(
         focusNode: focusNodePeople,
         keyboardType: TextInputType.number,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -258,9 +269,7 @@ class _KeishaCalculatePageState extends ConsumerState<KeishaCalculatePage> {
             suffix: const Text(
               '人',
               style: TextStyle(color: Colors.grey),
-            )),
-      ),
-    );
+            )));
   }
 
   Widget eventSaveButton(BuildContext context, WidgetRef ref) {
